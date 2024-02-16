@@ -30,13 +30,6 @@ y_test = Y_varb[20:] #test set is 'sales data' column, last 7 rows
 # print("-------")
 # print(y_test)
 
-#Visualize the data
-# plt.scatter(mlr05['X1'], mlr05['X3'])
-# plt.title('x3 vs sales data x1')
-# plt.xlabel('x')
-# plt.ylabel('y')
-# plt.show()
-
 #Select the linear regression model
 dataModel = LinearRegression()
 
@@ -55,14 +48,12 @@ prediction = prediction.reshape(-1,1) #Visually appealing column vector for prin
 print(prediction)
 
 #Plot test and prediction, and show line of perfect prediction
-plt.scatter(y_test, prediction)
-plt.xlabel('original sales data')
-plt.ylabel("Predictied sales data")
+plt.scatter(y_test, prediction, label='Predicted vs Actual')
+plt.xlabel('Actual Sales Data')
+plt.ylabel("Predictied Sales Data")
 plt.title('Actual vs Predicted Sales Data Values')
 plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='purple', linestyle='--')
+plt.legend()
 plt.grid(True)
 plt.show()
-
-
-
 
