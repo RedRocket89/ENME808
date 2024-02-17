@@ -2,29 +2,32 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-#pick a random function x(t), y(t)
+#pick a function x(t), y(t)
 def targetFunc(x):
     return 3*x + (1/2)
 
+#Produce the randomly generated data
 dataPts = np.random.uniform(-10, 10, size=(10100, 2))
 
+#Separate Train and Test Data
 trainPts = dataPts[:100, :]
-
 testPts = dataPts[100:, :]
 
+#Separate X and Y columns from Train Data
 train_feature = trainPts[:, 0]  #x data for training set
 train_label = trainPts[:, 1]    #y data for training set
 
-test_feature = testPts[:, 0]   #x data for test set
+#Separate X and Y columns from Test Data
+test_feature = testPts[:, 0]  #x data for test set
 test_label = testPts[:, 1]    #y data for test set
 
-#compute s(t) = w^Tx
+#Initialize w vector and eta (n)
 w = np.zeros((3, 1))
 n = 0.0001
 y_train_label = []
 
+#Iterate, calculate signal, and update weights
 for i in range(0, 10):
-
     for t in range(len(trainPts)):
         y_actual = trainPts[t,1] - targetFunc(trainPts[t,0])
         if y_actual > 0:
@@ -33,6 +36,7 @@ for i in range(0, 10):
             y_actual = -1
         if i == 0:
             y_train_label.append(y_actual)
+
         x_vec = np.array([1, trainPts[t,0], trainPts[t,1]]).reshape(-1,1)
         
         s_t = np.sign(np.dot(w.T, x_vec))
@@ -58,11 +62,13 @@ for a in range(len(testPts)):
         y_actual_test = 1
     else:
         y_actual_test = -1
+
     actual.append(y_actual_test)
     x_vec = np.array([1, test_feature[a], test_label[a]]).reshape(-1,1)
 
     s_t = np.sign(np.dot(w.T, x_vec))
     predictions.append(s_t)
+
 y_test_label = actual
 predictions = np.array(predictions).flatten()
 actual = np.array(actual).flatten()
@@ -72,7 +78,6 @@ y_train_label = np.array(y_train_label).flatten().astype(int)
 y_test_label = np.array(y_test_label).flatten().astype(int)
 
 # Plot the training data set
-
 z = np.linspace(-10,10)
 
 plt.scatter(train_feature[y_train_label==1], train_label[y_train_label==1], color='purple',label='+1')
@@ -87,10 +92,3 @@ plt.xlim(-10,10)
 plt.ylim(-10,10)
 plt.show()
 
-
-
-#plot the training data set, the target function f, and the final hypothesis f on the same figure
-#report the error on the test set
-
-
- 

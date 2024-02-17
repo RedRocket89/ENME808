@@ -15,10 +15,6 @@ mlr05 = pd.read_excel("mlr05.xlsx")
 X_varb = mlr05.iloc[:, 1:]  #X variables are the X2, X3, .. X6 predictors
 Y_varb = mlr05.iloc[:, 0]   #Y variable is the sales data, X1
 
-# print(X_varb)
-# print("-------")
-# print(Y_varb)
-
 #Separate Training and Testing Sets
 x_train = X_varb[:20] #training set are X_varb columns, first 20 rows
 y_train = Y_varb[:20] #training set is 'sales data' column, first 20 rows
