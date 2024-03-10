@@ -23,7 +23,9 @@ def CreateSemiCircles(rad, thk, sep):
 
 
 # Call function and plot points
+
 xsemi_red, xsemi_blue, ysemi_red, ysemi_blue = CreateSemiCircles(rad, thk, sep)
+"""
 plt.scatter(xsemi_red, ysemi_red, color='red')
 plt.scatter(xsemi_blue, ysemi_blue, color='blue')
 plt.xlabel('x')
@@ -31,6 +33,7 @@ plt.ylabel('y')
 plt.title('Double Semi-Circle Toy')
 plt.axis('equal')
 plt.show()
+"""
 
 ## PLA
 x = np.concatenate((xsemi_red, xsemi_blue))
@@ -54,24 +57,41 @@ while np.any(s_t != label) and c<len(label):
 w0 = w[0]
 w1 = w[1]
 w2 = w[2]
-def output(z):
+def output_PLA(z):
     return (-(w1/w2) * z) - (w0/w2)
 
 z = np.linspace(-20,30)
 
-print(c)
+## Linear Regression Method
+ones = np.ones((dataPts.shape[0], 1))
+X = np.hstack((ones, dataPts))
+Y = label.reshape(-1,1)
+
+X_trans = X.T
+X_trans_X = np.dot(X_trans, X)
+X_inverse = np.linalg.inv(X_trans_X)
+X_t = np.dot(X_inverse, X_trans)
+w_linear = np.dot(X_t, Y)
+print(w_linear)
+
+w0_lin = w_linear[0]
+w1_lin = w_linear[1]
+w2_lin = w_linear[2]
+def output_LR(f):
+    return (-(w1_lin/w2_lin) * f) - (w0_lin/w2_lin)
+
+f = np.linspace(-20,30)
 
 xsemi_red, xsemi_blue, ysemi_red, ysemi_blue = CreateSemiCircles(rad, thk, sep)
-plt.scatter(xsemi_red, ysemi_red, color='red')
-plt.scatter(xsemi_blue, ysemi_blue, color='blue')
-plt.plot(z, output(z), color='green', label='Final Hypothesis')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('Double Semi-Circle Toy')
+plt.scatter(xsemi_red, ysemi_red, color='red', label='+1 Data')
+plt.scatter(xsemi_blue, ysemi_blue, color='blue', label='-1 Data')
+plt.plot(z, output_PLA(z), color='green', label='PLA Hypothesis')
+plt.plot(f, output_LR(f), color = 'purple', label='Linear Reg')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Double Semi-Circle Toy - Data Separation')
+plt.legend()
+plt.xlim(-20,30)
+plt.ylim(-22,17)
 plt.show()
-
-
-
-
-
 
