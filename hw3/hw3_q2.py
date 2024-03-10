@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 rad = 10 #inner radius
 thk = 5  #thickness
-#sep = 5  #separation
 sep = np.arange(0.2, 5.1, 0.2)
 
 
@@ -47,63 +46,6 @@ def PerceptronAlg(xsemi_red, xsemi_blue, ysemi_red, ysemi_blue):
     w2 = w[2]
     return w0, w1, w2, c, dataPts, label
 
-def output_PLA(z, w0, w1, w2):
-    eqn_pla = (-(w1/w2) * z) - (w0/w2)
-    return eqn_pla
-
-
-
-
-
-
-
-
-## Linear Regression Method
-def LinReg(dataPts, label):
-    ones = np.ones((dataPts.shape[0], 1))
-    X = np.hstack((ones, dataPts))
-    Y = label.reshape(-1,1)
-
-    X_trans = X.T
-    X_trans_X = np.dot(X_trans, X)
-    X_inverse = np.linalg.inv(X_trans_X)
-    X_t = np.dot(X_inverse, X_trans)
-    w_linear = np.dot(X_t, Y)
-    print(w_linear)
-
-    w0_lin = w_linear[0]
-    w1_lin = w_linear[1]
-    w2_lin = w_linear[2]
-    return w0_lin, w1_lin, w2_lin
-
-def output_LR(f, w0_lin, w1_lin, w2_lin):
-    eqn_lr = (-(w1_lin/w2_lin) * f) - (w0_lin/w2_lin)
-    return eqn_lr
-'''
-f = np.linspace(-20,30)
-z = np.linspace(-20,30)
-'''
-'''
-xsemi_red, xsemi_blue, ysemi_red, ysemi_blue = CreateSemiCircles(rad, thk, sep)
-plt.scatter(xsemi_red, ysemi_red, color='red', label='+1 Data')
-plt.scatter(xsemi_blue, ysemi_blue, color='blue', label='-1 Data')
-plt.plot(z, output_PLA(z), color='green', label='PLA Hypothesis')
-plt.plot(f, output_LR(f), color = 'purple', label='Linear Reg')
-plt.xlabel('X')
-plt.ylabel('Y')
-plt.title('Double Semi-Circle Toy - Data Separation')
-plt.legend()
-plt.xlim(-20,30)
-plt.ylim(-22,17)
-plt.show()
-'''
-
-
-
-
-
-
-
 #######################################
 # Problem 3.2
 c_new = np.zeros(len(sep))
@@ -111,5 +53,3 @@ for a in range(len(sep)):
     xsemi_red, xsemi_blue, ysemi_red, ysemi_blue = CreateSemiCircles(rad, thk, sep[a])
     w0, w1, w2, c, dataPts, label = PerceptronAlg(xsemi_red, xsemi_blue, ysemi_red, ysemi_blue)
     c_new[a] = c
-
-print(c_new)
