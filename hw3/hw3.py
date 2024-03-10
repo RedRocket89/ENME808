@@ -32,6 +32,14 @@ plt.title('Double Semi-Circle Toy')
 plt.axis('equal')
 plt.show()
 
+## PLA
+x = np.concatenate((xsemi_red, xsemi_blue))
+y = np.concatenate((ysemi_red, ysemi_blue))
+dataPts = np.column_stack((x, y))
+#print(dataPts)
+
+
+
 
 
 
