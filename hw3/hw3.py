@@ -36,21 +36,20 @@ plt.show()
 x = np.concatenate((xsemi_red, xsemi_blue))
 y = np.concatenate((ysemi_red, ysemi_blue))
 dataPts = np.column_stack((x, y))
-label = np.concatenate(np.ones(1000), -np.ones(1000))
+label = np.concatenate([np.ones(1000), -1*np.ones(1000)])
 
 w = np.zeros((3, 1))
 x_vec = np.zeros((3, 1))
 s_t = np.sign(np.dot(w.T, x_vec))
-c = 1
-while np.any(s_t != label):
-    x = dataPts(c, 1)
-    y = dataPts(c, 2)
-    x_vec = np.array(1, x, y)
+c = 0
+while np.any(s_t != label) and c<len(label):
+    x, y = dataPts[c]
+    x_vec = np.array([1, x, y]).reshape(-1,1)
     s_t = np.sign(np.dot(w.T, x_vec))
-    temp = label * s_t
+    temp = label[c] * s_t
     if temp <= 1:
-        w += (label - s_t) * x_vec
-    c = c + 1
+        w += (label[c] - s_t) * x_vec
+    c += 1
 
 w0 = w[0]
 w1 = w[1]
@@ -58,8 +57,18 @@ w2 = w[2]
 def output(z):
     return (-(w1/w2) * z) - (w0/w2)
 
+z = np.linspace(-20,30)
 
+print(c)
 
+xsemi_red, xsemi_blue, ysemi_red, ysemi_blue = CreateSemiCircles(rad, thk, sep)
+plt.scatter(xsemi_red, ysemi_red, color='red')
+plt.scatter(xsemi_blue, ysemi_blue, color='blue')
+plt.plot(z, output(z), color='green', label='Final Hypothesis')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Double Semi-Circle Toy')
+plt.show()
 
 
 
