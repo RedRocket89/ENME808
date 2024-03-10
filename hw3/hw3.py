@@ -36,7 +36,30 @@ plt.show()
 x = np.concatenate((xsemi_red, xsemi_blue))
 y = np.concatenate((ysemi_red, ysemi_blue))
 dataPts = np.column_stack((x, y))
-#print(dataPts)
+label = np.concatenate(np.ones(1000), -np.ones(1000))
+
+w = np.zeros((3, 1))
+x_vec = np.zeros((3, 1))
+s_t = np.sign(np.dot(w.T, x_vec))
+c = 1
+while np.any(s_t != label):
+    x = dataPts(c, 1)
+    y = dataPts(c, 2)
+    x_vec = np.array(1, x, y)
+    s_t = np.sign(np.dot(w.T, x_vec))
+    temp = label * s_t
+    if temp <= 1:
+        w += (label - s_t) * x_vec
+    c = c + 1
+
+w0 = w[0]
+w1 = w[1]
+w2 = w[2]
+def output(z):
+    return (-(w1/w2) * z) - (w0/w2)
+
+
+
 
 
 
