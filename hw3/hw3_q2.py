@@ -91,7 +91,7 @@ def output_LR(f, w0_lin, w1_lin, w2_lin):
 f = np.linspace(-20,30)
 z = np.linspace(-20,30)
 
-def plotting(rad, thk, sep, f, z)
+def plotting(rad, thk, sep, f, z):
     xsemi_red, xsemi_blue, ysemi_red, ysemi_blue = CreateSemiCircles(rad, thk, sep)
     plt.scatter(xsemi_red, ysemi_red, color='red', label='+1 Data')
     plt.scatter(xsemi_blue, ysemi_blue, color='blue', label='-1 Data')
@@ -115,6 +115,10 @@ for a in range(len(sep)):
     for_what.append(total_iters)
     print(a)
 
-plt.plot(for_what)
+plt.plot(sep, for_what, color='purple')
+plt.title('Sep vs Number of Iterations')
+plt.xlabel('Sep')
+plt.ylabel('Num of Iterations')
+plt.grid(True)
 plt.show()
     
