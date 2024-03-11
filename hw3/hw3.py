@@ -53,11 +53,6 @@ def output_PLA(z, w0, w1, w2):
 
 
 
-
-
-
-
-
 ## Linear Regression Method
 def LinReg(dataPts, label):
     ones = np.ones((dataPts.shape[0], 1))
@@ -79,11 +74,10 @@ def LinReg(dataPts, label):
 def output_LR(f, w0_lin, w1_lin, w2_lin):
     eqn_lr = (-(w1_lin/w2_lin) * f) - (w0_lin/w2_lin)
     return eqn_lr
-'''
+
 f = np.linspace(-20,30)
 z = np.linspace(-20,30)
-'''
-'''
+
 xsemi_red, xsemi_blue, ysemi_red, ysemi_blue = CreateSemiCircles(rad, thk, sep)
 plt.scatter(xsemi_red, ysemi_red, color='red', label='+1 Data')
 plt.scatter(xsemi_blue, ysemi_blue, color='blue', label='-1 Data')
@@ -96,20 +90,3 @@ plt.legend()
 plt.xlim(-20,30)
 plt.ylim(-22,17)
 plt.show()
-'''
-
-
-
-
-
-
-
-#######################################
-# Problem 3.2
-c_new = np.zeros(len(sep))
-for a in range(len(sep)):
-    xsemi_red, xsemi_blue, ysemi_red, ysemi_blue = CreateSemiCircles(rad, thk, sep[a])
-    w0, w1, w2, c, dataPts, label = PerceptronAlg(xsemi_red, xsemi_blue, ysemi_red, ysemi_blue)
-    c_new[a] = c
-
-print(c_new)
