@@ -44,29 +44,28 @@ def output_LR(f, w0_lin, w1_lin, w2_lin):
     return eqn_lr
 
 
-def predict(x):
+def predict(x, w):
         return np.sign(np.dot(x,w))
 
     
 def updateWeights(prediction,true_value,input_value, w):
-    w = w
-    if prediction * true_value <= 1:
+    if prediction != true_value:
         w += (true_value - prediction)*input_value
     return w
 
 #run LinReg first
-def perceptron(X_train, label, w):
-    dataPts = X_train        
-    x_vec = np.concatenate((np.ones((dataPts.shape[0],1)),dataPts),1)
+def perceptron(X_train, label, w):       
+    x_vec = np.concatenate((np.ones((X_train.shape[0],1)),X_train),1)
     iteration = 0
-    while np.any(predict(x_vec) != label):
+    for _ in range(5 * x_vec.shape[0]):
         pt_index = iteration % x_vec.shape[0]
-        pred = predict(x_vec[pt_index,:])
+        pred = predict(x_vec[pt_index,:], w)
         old_w = w
-        old_accuracy = np.sum(predict(x_vec) != label)
+        old_accuracy = np.sum(predict(x_vec, old_w) != label)
         w = updateWeights(pred,label[pt_index],x_vec[pt_index,:], old_w)
         iteration += 1 
-        new_accuracy = np.sum(predict(x_vec) != label)
+        print(iteration)
+        new_accuracy = np.sum(predict(x_vec, old_w) != label)
         if old_accuracy < new_accuracy:
              w = old_w
 
